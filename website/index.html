@@ -1,0 +1,434 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sentiment Analysis</title>
+    <link rel="stylesheet" href="styles.css">
+    <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+    <div id="loadingScreen" style="display:none;">
+        <div class="spinner"></div>
+        <p>Loading, please wait...</p>
+    </div>
+    <div class="container">
+        <div class="stepper">
+            <div class="step" id="step1">
+                <div class="circle" id="circle1">1</div>
+                <p>Start</p>
+            </div>
+            <div class="step" id="step2">
+                <div class="circle" id="circle2">2</div>
+                <p>Collect Table</p>
+            </div>
+            <div class="step" id="step3">
+                <div class="circle" id="circle3">3</div>
+                <p>Preprocess Data</p>
+            </div>
+            <div class="substepper" id="substepper3">
+                <div class="substep" id="substep3-1">
+                    <div class="circle" id="subcircle3-1">3.1</div>
+                    <p>Cleansing</p>
+                </div>
+                <div class="substep" id="substep3-2">
+                    <div class="circle" id="subcircle3-2">3.2</div>
+                    <p>Casefolding</p>
+                </div>
+                <div class="substep" id="substep3-3">
+                    <div class="circle" id="subcircle3-3">3.3</div>
+                    <p>Remove Elongation</p>
+                </div>
+                <div class="substep" id="substep3-4">
+                    <div class="circle" id="subcircle3-4">3.4</div>
+                    <p>Tokenization</p>
+                </div>
+                <div class="substep" id="substep3-5">
+                    <div class="circle" id="subcircle3-5">3.5</div>
+                    <p>Stopword Removal</p>
+                </div>
+                <div class="substep" id="substep3-6">
+                    <div class="circle" id="subcircle3-6">3.6</div>
+                    <p>Remove Slang</p>
+                </div>
+                <div class="substep" id="substep3-7">
+                    <div class="circle" id="subcircle3-7">3.7</div>
+                    <p>Stemming</p>
+                </div>
+                <div class="substep" id="substep3-8">
+                    <div class="circle" id="subcircle3-8">3.8</div>
+                    <p>Final Result</p>
+                </div>
+            </div>
+            <div class="step" id="step4">
+                <div class="circle" id="circle4">4</div>
+                <p>Word Embedding</p>
+            </div>
+            <div class="step" id="step5">
+                <div class="circle" id="circle5">5</div>
+                <p>Train-Test split</p>
+            </div>
+            <div class="step" id="step6">
+                <div class="circle" id="circle6">6</div>
+                <p>Sentiment Analysis</p>
+            </div>
+            <div class="step" id="step7">
+                <div class="circle" id="circle7">7</div>
+                <p>Result</p>
+            </div>
+        </div>
+        <div class="content">
+            <div id="Start">
+                <h1>SELAMAT DATANG DI WEBSITE HASIL ANALISIS SENTIMEN TERHADAP DEEPFAKE BERDASARKAN OPINI MASYARAKAT DI PLATFORM X MENGGUNAKAN KOMBINASI ALGORITMA RANDOM FOREST DAN COMPLEMENT NAIVE BAYES</h1>
+                <button id="fetchDatasetButton" onclick="show('CollectTable')">Pengambilan Dataset</button>
+            </div>
+            <div id="CollectTable" style="display:none">
+                <h1>Tabel Dataset</h1>
+                <div class="table-container">
+                    <table id="datasetTable">
+                        <thead>
+                            <tr>
+                                <th>ID</th>
+                                <th>Username</th>
+                                <th>URL</th>
+                                <th>Tweet</th>
+                                <th>Date</th>
+                                <th>Sentimen Terlabel</th>
+                            </tr>
+                        </thead>
+                        <tbody id="datasetTableBody">
+                            
+                        </tbody>
+                    </table>
+                </div>
+                <button onclick="show('PreprocessData');">Data Preprocessing</button>
+            </div>
+            <div id="PreprocessData" style="display:none">
+                <button id="start_cleansing" onclick="showSubstep('substepContent3-1')">Start: Cleansing</button>
+                <div id="substepContent3-1" style="display:none">
+                    <h1>Cleansing</h1>
+                    <div class="table-container">
+                        <table id="datasetTable2-1">
+                            <thead>
+                                <tr>
+                                    <th>ID</th>
+                                    <th>Username</th>
+                                    <th>URL</th>
+                                    <th>Hasil Cleansing</th>
+                                    <th>Date</th>
+                                    <th>Sentimen Terlabel</th>
+                                </tr>
+                            </thead>
+                            <tbody id="datasetTableBody2-1">
+                                
+                            </tbody>
+                        </table>
+                    </div>
+                    <button id="start_casefolding" onclick="showSubstep('substepContent3-2')" style= "display:none">Next: CaseFolding</button>
+                </div>
+                <div id="substepContent3-2" style="display:none">
+                    <h1>CaseFolding</h1>
+                    <div class="table-container">
+                        <table id="datasetTable2-2">
+                            <thead>
+                                <tr>
+                                    <th>ID</th>
+                                    <th>Username</th>
+                                    <th>URL</th>
+                                    <th>Hasil CaseFolding</th>
+                                    <th>Date</th>
+                                    <th>Sentimen Terlabel</th>
+                                </tr>
+                            </thead>
+                            <tbody id="datasetTableBody2-2">
+                                
+                            </tbody>
+                        </table>
+                    </div>
+                    <button id="start_remove_elongation" onclick="showSubstep('substepContent3-3')" style= "display:none">Next: Remove Elongation</button>
+                </div>
+                <div id="substepContent3-3" style="display:none">
+                    <h1>Remove Elongation</h1>
+                    <div class="table-container">
+                        <table id="datasetTable2-3">
+                            <thead>
+                                <tr>
+                                    <th>ID</th>
+                                    <th>Username</th>
+                                    <th>URL</th>
+                                    <th>Hasil Remove Elongation</th>
+                                    <th>Date</th>
+                                    <th>Sentimen Terlabel</th>
+                                </tr>
+                            </thead>
+                            <tbody id="datasetTableBody2-3">
+                               
+                            </tbody>
+                        </table>
+                    </div>
+                    <button id="start_tokenization" onclick="showSubstep('substepContent3-4')" style= "display:none">Next: Tokenization</button>
+                </div>
+                <div id="substepContent3-4" style="display:none">
+                    <h1>Tokenization</h1>
+                    <div class="table-container">
+                        <table id="datasetTable2-4">
+                            <thead>
+                                <tr>
+                                    <th>ID</th>
+                                    <th>Username</th>
+                                    <th>URL</th>
+                                    <th>Hasil Tokenization</th>
+                                    <th>Date</th>
+                                    <th>Sentimen Terlabel</th>
+                                </tr>
+                            </thead>
+                            <tbody id="datasetTableBody2-4">
+                               
+                            </tbody>
+                        </table>
+                    </div>
+                    <button id="start_stopword" onclick="showSubstep('substepContent3-5')" style= "display:none">Next: Stopword Removal</button>
+                </div>
+                <div id="substepContent3-5" style="display:none">
+                    <h1>Stopword Removal</h1>
+                    <div class="table-container">
+                        <table id="datasetTable2-5">
+                            <thead>
+                                <tr>
+                                    <th>ID</th>
+                                    <th>Username</th>
+                                    <th>URL</th>
+                                    <th>Hasil Stopword Removal</th>
+                                    <th>Date</th>
+                                    <th>Sentimen Terlabel</th>
+                                </tr>
+                            </thead>
+                            <tbody id="datasetTableBody2-5">
+                               
+                            </tbody>
+                        </table>
+                    </div>
+                    <button id="start_remove_slang" onclick="showSubstep('substepContent3-6')" style= "display:none">Next: Remove Slang</button>
+                </div>
+                <div id="substepContent3-6" style="display:none">
+                    <h1>Remove Slang</h1>
+                    <div class="table-container">
+                        <table id="datasetTable2-6">
+                            <thead>
+                                <tr>
+                                    <th>ID</th>
+                                    <th>Username</th>
+                                    <th>URL</th>
+                                    <th>Hasil Remove Slang</th>
+                                    <th>Date</th>
+                                    <th>Sentimen Terlabel</th>
+                                </tr>
+                            </thead>
+                            <tbody id="datasetTableBody2-6">
+                                
+                            </tbody>
+                        </table>
+                    </div>
+                    <button id="start_stemming" onclick="showSubstep('substepContent3-7')" style= "display:none">Next: Stemming</button>
+                </div>
+                <div id="substepContent3-7" style="display:none">
+                    <h1>Stemming</h1>
+                    <div class="table-container">
+                        <table id="datasetTable2-7">
+                            <thead>
+                                <tr>
+                                    <th>ID</th>
+                                    <th>Username</th>
+                                    <th>URL</th>
+                                    <th>Hasil Stemming</th>
+                                    <th>Date</th>
+                                    <th>Sentimen Terlabel</th>
+                                </tr>
+                            </thead>
+                            <tbody id="datasetTableBody2-7">
+                                
+                            </tbody>
+                        </table>
+                    </div>
+                    <button id="final_result" onclick="showSubstep('substepContent3-8')" style= "display:none">Next: Final Result</button>
+                </div>
+                <div id="substepContent3-8" style="display:none">
+                    <h1>Setiap Tahap Preprocessing</h1>
+                    <div class="table-container">
+                        <table id="datasetTable2-8">
+                            <thead>
+                                <tr>
+                                    <th>ID</th>
+                                    <th>Username</th>
+                                    <th>URL</th>
+                                    <th>Tweet</th>
+                                    <th>Hasil Cleansing</th>
+                                    <th>Hasil Casefolding</th>
+                                    <th>Hasil Remove Elongation</th>
+                                    <th>Hasil Tokenization</th>
+                                    <th>Hasil Stopword Removal</th>
+                                    <th>Hasil Remove Slang</th>
+                                    <th>Hasil Stemming</th>
+                                    <th>Date</th>
+                                    <th>Sentimen Terlabel</th>
+                                </tr>
+                            </thead>
+                            <tbody id="datasetTableBody2-8">
+                                
+                            </tbody>
+                        </table>
+                    </div>
+                    <button id="wordEmbeddingButton" onclick="show('WordEmbedding')">Word Embedding dengan FastText</button>
+                </div>
+            </div>
+            <div id="WordEmbedding" style="display:none">
+                <button id="train_fast">Melatih model FastText</button>
+                <button id="start_FastText" style="display:none">Melakukan vektorisasi dengan FastText</button>
+                <div id="vectorization_result" style="display:none">
+                    <h1>Hasil Word Embedding</h1>
+                    <div class="table-container">
+                        <table id="datasetTable3">
+                            <thead>
+                                <tr>
+                                    <th>ID</th>
+                                    <th>Username</th>
+                                    <th>URL</th>
+                                    <th>Tweet</th>
+                                    <th>Hasil Cleansing</th>
+                                    <th>Hasil Casefolding</th>
+                                    <th>Hasil Remove Elongation</th>
+                                    <th>Hasil Tokenization</th>
+                                    <th>Hasil Stopword Removal</th>
+                                    <th>Hasil Remove Slang</th>
+                                    <th>Hasil Stemming</th>
+                                    <th>Hasil Word Embedding</th>
+                                    <th>Date</th>
+                                    <th>Sentimen Terlabel</th>
+                                </tr>
+                            </thead>
+                            <tbody id="datasetTableBody3">
+                                
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                <button id="startSplit" onclick="show('Split')" style= "display:none">Memisahkan Data</button>
+            </div>
+            <div id="Split" style="display:none">
+                <h1>Memisah Data</h1>
+                <div class="options">
+                    <label for="splice">Pilih persentase pemisahan data menjadi data latih dan data uji :</label>
+                    <select name="splice" id="splice">
+                        <option value="10">90:10</option>
+                        <option value="20">80:20</option>
+                        <option value="30">70:30</option>
+                        <option value="40">60:40</option>
+                    </select>
+                </div>
+                <button id="splittingData">Pemisahan Data</button>
+                <div class="table-container" id="table_test" style="display:none">
+                    <table id="datasetTable4">
+                        <thead>
+                            <tr>
+                                <th>ID</th>
+                                <th>Username</th>
+                                <th>URL</th>
+                                <th>Tweet</th>
+                                <th>Hasil Cleansing</th>
+                                <th>Hasil Casefolding</th>
+                                <th>Hasil Remove Elongation</th>
+                                <th>Hasil Tokenization</th>
+                                <th>Hasil Stopword Removal</th>
+                                <th>Hasil Remove Slang</th>
+                                <th>Hasil Stemming</th>
+                                <th>Hasil Word Embedding</th>
+                                <th>Date</th>
+                                <th>Sentimen Terlabel</th>
+                            </tr>
+                        </thead>
+                        <tbody id="datasetTableBody4">
+                           
+                        </tbody>
+                    </table>
+                </div>
+                <div id="training" style="display:none">
+                    <div id = "text" style="text-align: center">Pelatihan Model : </div>
+                    <div id = "buttons">
+                        <button id="trainRFButton" onclick="show('SentimentAnalysis')">Random Forest</button>
+                        <button id="trainCNBButton" onclick="show('SentimentAnalysis')">Complement Naive Bayes</button>
+                        <button id="trainELButton" onclick="show('SentimentAnalysis')">Ensemble Method</button>
+                    </div>
+                </div>
+            </div>
+            <div id="SentimentAnalysis" style="display:none">
+                <button id="analisis">Analisis Sentimen</button>
+                <div id="prediksi" style="display:none">
+                    <h1>Dataset dengan Hasil Prediksi</h1>
+                    <div id="methods">Metode yang digunakan : </div>
+                    <div class="table-container">
+                        <table id="datasetTable5">
+                            <thead>
+                                <tr>
+                                    <th>ID</th>
+                                    <th>Username</th>
+                                    <th>URL</th>
+                                    <th>Tweet</th>
+                                    <th>Hasil Cleansing</th>
+                                    <th>Hasil Casefolding</th>
+                                    <th>Hasil Remove Elongation</th>
+                                    <th>Hasil Tokenization</th>
+                                    <th>Hasil Stopword Removal</th>
+                                    <th>Hasil Remove Slang</th>
+                                    <th>Hasil Stemming</th>
+                                    <th>Hasil Word Embedding</th>
+                                    <th>Date</th>
+                                    <th>Sentimen Terlabel</th>
+                                    <th>Prediksi Sentimen</th>
+                                </tr>
+                            </thead>
+                            <tbody id="datasetTableBody5">
+                                
+                            </tbody>
+                        </table>
+                    </div>
+                    <div id = "buttons2" style="display:none;">
+                        <button id="exportExcel">Export Tabel ke Excel</button>
+                        <button id="showAccuracy" onclick="return show('Visualization');">Visualisasi Evaluasi Model</button>
+                    </div>
+                </div>
+            </div>
+            <div id="Visualization" style="display:none">
+                <h1>Evaluasi Model</h1>
+                <div id="confusionMatrixContainer">
+                    <div id="heatmap" class="heatmap-container"></div>
+                    <div id="PieChartStats">
+                        <canvas id="pieChart"></canvas>
+                        <div id="statsContainer">
+                            
+                        </div>
+                    </div>
+                </div>
+                <div id="classificationReportContainer">
+                    <h3>Classification Report</h3>
+                    <table id="classificationReport">
+                        <thead>
+                            <tr>
+                                <th>Label</th>
+                                <th>Precision</th>
+                                <th>Recall</th>
+                                <th>F1-Score</th>
+                                <th>Support</th>
+                            </tr>
+                        </thead>
+                        <tbody id="classificationReportBody">
+                            
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="indexscripts.js"></script>
+</body>
+</html>
